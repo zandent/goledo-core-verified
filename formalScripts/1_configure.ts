@@ -887,7 +887,7 @@ async function main() {
   await multiFeeDistribution.addReward(addresses.Markets.USDT.atoken);
   await multiFeeDistribution.addReward(addresses.Markets.WETH.atoken);
   await multiFeeDistribution.addReward(addresses.Markets.WBTC.atoken);
-  await multiFeeDistribution.mint(deployer.address, MAX_SUPPLY.mul(4).div(10), false);
+  await multiFeeDistribution.mint(deployer.address, MAX_SUPPLY.mul(4).div(10), false, {gasLimit: '10000000',});
   await multiFeeDistribution.exit(true, {gasLimit: '10000000',});
   await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.CFX.token, true);
   await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.USDT.token, true);
