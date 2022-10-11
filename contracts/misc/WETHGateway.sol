@@ -91,26 +91,26 @@ interface IWETH {
 }
 
 interface IWETHGateway {
-  function depositETH(
+  function depositCFX(
     address lendingPool,
     address onBehalfOf,
     uint16 referralCode
   ) external payable;
 
-  function withdrawETH(
+  function withdrawCFX(
     address lendingPool,
     uint256 amount,
     address onBehalfOf
   ) external;
 
-  function repayETH(
+  function repayCFX(
     address lendingPool,
     uint256 amount,
     uint256 rateMode,
     address onBehalfOf
   ) external payable;
 
-  function borrowETH(
+  function borrowCFX(
     address lendingPool,
     uint256 amount,
     uint256 interesRateMode,
@@ -985,7 +985,7 @@ contract WETHGateway is IWETHGateway, Ownable {
   }
 
   
-  function depositETH(
+  function depositCFX(
     address lendingPool,
     address onBehalfOf,
     uint16 referralCode
@@ -995,7 +995,7 @@ contract WETHGateway is IWETHGateway, Ownable {
   }
 
   
-  function withdrawETH(
+  function withdrawCFX(
     address lendingPool,
     uint256 amount,
     address to
@@ -1015,7 +1015,7 @@ contract WETHGateway is IWETHGateway, Ownable {
   }
 
   
-  function repayETH(
+  function repayCFX(
     address lendingPool,
     uint256 amount,
     uint256 rateMode,
@@ -1042,7 +1042,7 @@ contract WETHGateway is IWETHGateway, Ownable {
   }
 
   
-  function borrowETH(
+  function borrowCFX(
     address lendingPool,
     uint256 amount,
     uint256 interesRateMode,
