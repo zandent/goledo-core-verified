@@ -165,13 +165,13 @@ const ADDRESSES: {
     },
   },
   espace: {
-    Admin: "0x507f8a2a5572179ea52aa749471611bcffccf9de",
-    EmergencyAdmin: "0x440db4b6e54f7626fBeA81145495b2224Fd38131",
-    Treasury: "0x507f8a2a5572179ea52aa749471611bcffccf9de",
+    Admin: "0x8BB89e5b2D8c8A17aB5c2c3148dF86297A2Fd05B",
+    EmergencyAdmin: "0x8BB89e5b2D8c8A17aB5c2c3148dF86297A2Fd05B",
+    Treasury: "",
     WitnetRouter: "0xd39d4d972c7e166856c4eb29e54d3548b4597f53",
-    WCFX: "",
-    SwappiRouter: "",
-    SwappiFactory: "",
+    WCFX: "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
+    SwappiRouter: "0x62b0873055bf896dd869e172119871ac24aea305",
+    SwappiFactory: "0xe2a6f7c0ce4d5d300f97aa7e125455f5cd3342f5",
     GenericLogic: "",
     ValidationLogic: "",
     ReserveLogic: "",
@@ -197,7 +197,64 @@ const ADDRESSES: {
     StableDebtTokenImpl: "",
     VariableDebtTokenImpl: "",
     SwappiLP: "",
-    Markets: {},
+    Markets: {
+      CFX: {
+        token: "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
+        decimals: 18,
+        atoken: "",
+        stoken: "",
+        vtoken: "",
+        oracle: "",
+        DefaultReserveInterestRateStrategy: "",
+        witnetConfig: {
+          assetId: "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
+          decimals: 6,
+          timeout: 60 * 60 * 2,
+        },
+      },
+      WETH: {
+        token: "0xa47f43de2f9623acb395ca4905746496d2014d57",
+        decimals: 18,
+        atoken: "",
+        stoken: "",
+        vtoken: "",
+        oracle: "",
+        DefaultReserveInterestRateStrategy: "",
+        witnetConfig: {
+          assetId: "0x3d15f7018db5cc80838b684361aaa100bfadf8a11e02d5c1c92e9c6af47626c8",
+          decimals: 6,
+          timeout: 60 * 60 * 2,
+        },
+      },
+      WBTC: {
+        token: "0x1f545487c62e5acfea45dcadd9c627361d1616d8",
+        decimals: 18,
+        atoken: "",
+        stoken: "",
+        vtoken: "",
+        oracle: "",
+        DefaultReserveInterestRateStrategy: "",
+        witnetConfig: {
+          assetId: "0x24beead43216e490aa240ef0d32e18c57beea168f06eabb94f5193868d500946",
+          decimals: 6,
+          timeout: 60 * 60 * 2,
+        },
+      },
+      USDT: {
+        token: "0xfe97e85d13abd9c1c33384e796f10b73905637ce",
+        decimals: 18,
+        atoken: "",
+        stoken: "",
+        vtoken: "",
+        oracle: "",
+        DefaultReserveInterestRateStrategy: "",
+        witnetConfig: {
+          assetId: "0x538f5a25b39995a23c24037d2d38f979c8fa7b00d001e897212d936e6f6556ef",
+          decimals: 6,
+          timeout: 60 * 60 * 48,
+        },
+      },
+    },
   },
 };
 const RATE_STRATEGY: {
@@ -244,7 +301,7 @@ const RATE_STRATEGY: {
   },
 };
 const MAX_SUPPLY = ethers.utils.parseEther("1000000000");
-const GOLEDOVESTINGLOCKTIMESTAMP = 1665889200;
+const GOLEDOVESTINGLOCKTIMESTAMP = 1671336000;
 
 let goledoToken: GoledoToken;
 let lendingPoolAddressesProviderRegistry: LendingPoolAddressesProviderRegistry;
