@@ -300,8 +300,8 @@ const RATE_STRATEGY: {
     stableRateSlope2: "0", // stableRateSlope2
   },
 };
-const MAX_SUPPLY = ethers.utils.parseEther("1000000000");
-const GOLEDOVESTINGLOCKTIMESTAMP = 1671336000;
+const MAX_SUPPLY = ethers.utils.parseEther("100000000");
+const GOLEDOVESTINGLOCKTIMESTAMP = 1672023600;
 
 let goledoToken: GoledoToken;
 let lendingPoolAddressesProviderRegistry: LendingPoolAddressesProviderRegistry;
@@ -641,7 +641,7 @@ async function main() {
   }
   const ONEMONTH = 2628000; // 2628000; //TODO: change to 2628000 10800
   const TIMEOFFSETBASE = 0;
-  const TOTALAMOUNTOFMONTHS = 4 * 12; // 5 years
+  const TOTALAMOUNTOFMONTHS = 4 * 12; // 4 years
   const startTimeOffset: number[] = new Array(TOTALAMOUNTOFMONTHS);
   const rewardsPerSecond: BigNumber[] = new Array(TOTALAMOUNTOFMONTHS);
   const rawRewardsPerSecond: number[] = new Array(
@@ -696,7 +696,7 @@ async function main() {
     );
   const rewardsPerSecondForChefIncentivesController: BigNumber[] = new Array(TOTALAMOUNTOFMONTHS);
   const rewardsPerSecondForMasterChef: BigNumber[] = new Array(TOTALAMOUNTOFMONTHS);
-  rewardsPerSecond[0] = BigNumber.from(rawRewardsPerSecond[0]).mul(ethers.utils.parseEther("1")).div(ONEMONTH);
+  rewardsPerSecond[0] = BigNumber.from(rawRewardsPerSecond[0]).mul(ethers.utils.parseEther("1")).div(100).div(ONEMONTH);
   rewardsPerSecondForMasterChef[0] = rewardsPerSecond[0].div(2);
   rewardsPerSecondForChefIncentivesController[0] = rewardsPerSecond[0].sub(rewardsPerSecond[0].div(2));
   startTimeOffset[0] = TIMEOFFSETBASE;
@@ -708,7 +708,7 @@ async function main() {
   );
   for (let i = 1; i < startTimeOffset.length; i++) {
     startTimeOffset[i] = startTimeOffset[i - 1] + ONEMONTH;
-    rewardsPerSecond[i] = BigNumber.from(rawRewardsPerSecond[i]).mul(ethers.utils.parseEther("1")).div(ONEMONTH);
+    rewardsPerSecond[i] = BigNumber.from(rawRewardsPerSecond[i]).mul(ethers.utils.parseEther("1")).div(100).div(ONEMONTH);
     rewardsPerSecondForMasterChef[i] = rewardsPerSecond[i].div(2);
     rewardsPerSecondForChefIncentivesController[i] = rewardsPerSecond[i].sub(rewardsPerSecond[i].div(2));
     console.log(
@@ -872,6 +872,7 @@ async function main() {
           defaultReserveInterestRateStrategy.address
         );
       }
+      const _allocPoint = (token == "CFX")? 40 : 20;
       const tx = await lendingPoolConfigurator.batchInitReserve([
         {
           aTokenImpl: addresses.ATokenImpl!,
@@ -882,7 +883,7 @@ async function main() {
           underlyingAsset: market.token,
           treasury: addresses.Treasury,
           incentivesController: chefIncentivesController.address,
-          allocPoint: 1,
+          allocPoint: _allocPoint,
           underlyingAssetName: token,
           aTokenName: `Goledo interest bearing ${token}`,
           aTokenSymbol: `g${token}`,

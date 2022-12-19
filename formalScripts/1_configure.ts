@@ -243,8 +243,8 @@ const RATE_STRATEGY: {
     stableRateSlope2: "0", // stableRateSlope2
   },
 };
-const MAX_SUPPLY = ethers.utils.parseEther("1000000000");
-const GOLEDOVESTINGLOCKTIMESTAMP = 1671336000;
+const MAX_SUPPLY = ethers.utils.parseEther("100000000");
+const GOLEDOVESTINGLOCKTIMESTAMP = 1672023600;
 
 let goledoToken: GoledoToken;
 let lendingPoolAddressesProviderRegistry: LendingPoolAddressesProviderRegistry;
@@ -641,7 +641,7 @@ async function main() {
     );
   const rewardsPerSecondForChefIncentivesController: BigNumber[] = new Array(TOTALAMOUNTOFMONTHS);
   const rewardsPerSecondForMasterChef: BigNumber[] = new Array(TOTALAMOUNTOFMONTHS);
-  rewardsPerSecond[0] = BigNumber.from(rawRewardsPerSecond[0]).mul(ethers.utils.parseEther("1")).div(ONEMONTH);
+  rewardsPerSecond[0] = BigNumber.from(rawRewardsPerSecond[0]).mul(ethers.utils.parseEther("1")).div(100).div(ONEMONTH);
   rewardsPerSecondForMasterChef[0] = rewardsPerSecond[0].div(2);
   rewardsPerSecondForChefIncentivesController[0] = rewardsPerSecond[0].sub(rewardsPerSecond[0].div(2));
   startTimeOffset[0] = TIMEOFFSETBASE;
@@ -653,7 +653,7 @@ async function main() {
   );
   for (let i = 1; i < startTimeOffset.length; i++) {
     startTimeOffset[i] = startTimeOffset[i - 1] + ONEMONTH;
-    rewardsPerSecond[i] = BigNumber.from(rawRewardsPerSecond[i]).mul(ethers.utils.parseEther("1")).div(ONEMONTH);
+    rewardsPerSecond[i] = BigNumber.from(rawRewardsPerSecond[i]).mul(ethers.utils.parseEther("1")).div(100).div(ONEMONTH);
     rewardsPerSecondForMasterChef[i] = rewardsPerSecond[i].div(2);
     rewardsPerSecondForChefIncentivesController[i] = rewardsPerSecond[i].sub(rewardsPerSecond[i].div(2));
     console.log(
@@ -887,7 +887,7 @@ async function main() {
   await multiFeeDistribution.addReward(addresses.Markets.USDT.atoken);
   await multiFeeDistribution.addReward(addresses.Markets.WETH.atoken);
   await multiFeeDistribution.addReward(addresses.Markets.WBTC.atoken);
-  await multiFeeDistribution.mint(deployer.address, MAX_SUPPLY.mul(4).div(10), false, {gasLimit: '10000000',});
+  await multiFeeDistribution.mint(deployer.address, ethers.utils.parseEther("6999999"), false, {gasLimit: '10000000',});
   await multiFeeDistribution.exit(true, {gasLimit: '10000000',});
   await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.CFX.token, true);
   await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.USDT.token, true);
