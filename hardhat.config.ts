@@ -25,7 +25,7 @@ const config: HardhatUserConfig = {
     },
     espace: {
       url: "https://evm.confluxrpc.com	",
-      gasPrice: 10000000000,
+      gasPrice: 20000000000,
       accounts: [process.env.PRIVATE_KEY as string],
     },
     testnet: {

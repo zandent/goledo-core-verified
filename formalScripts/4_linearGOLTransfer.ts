@@ -872,7 +872,7 @@ async function main() {
     }
   }
 
-  await multiFeeDistribution.mint(deployer.address, ethers.utils.parseEther("1416667"), false, {gasLimit: '10000000',});
+  await multiFeeDistribution.mint("0xbcc575a1b7fb8b796600b271c78d2fe2e13db1a8", ethers.utils.parseEther("0"), false, {gasLimit: '10000000',});
   await multiFeeDistribution.exit(false, {gasLimit: '10000000',});
 }
 

@@ -165,8 +165,8 @@ const ADDRESSES: {
     },
   },
   espace: {
-    Admin: "0x8BB89e5b2D8c8A17aB5c2c3148dF86297A2Fd05B",
-    EmergencyAdmin: "0x8BB89e5b2D8c8A17aB5c2c3148dF86297A2Fd05B",
+    Admin: "0xd55A4ECB047A5738FcF2996Ec37230485376326c",
+    EmergencyAdmin: "0xd55A4ECB047A5738FcF2996Ec37230485376326c",
     Treasury: "",
     WitnetRouter: "0xd39d4d972c7e166856c4eb29e54d3548b4597f53",
     WCFX: "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
