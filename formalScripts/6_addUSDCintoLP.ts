@@ -321,9 +321,16 @@ const RATE_STRATEGY: {
     stableRateSlope1: "0", // stableRateSlope1
     stableRateSlope2: "0", // stableRateSlope2
   },
+  USDC: {
+    optimalUtilizationRate: "900000000000000100000000000", // optimalUtilizationRate
+    baseVariableBorrowRate: "0", // baseVariableBorrowRate
+    variableRateSlope1: "40000000000000000000000000", // variableRateSlope1
+    variableRateSlope2: "600000000000000000000000000", // variableRateSlope2
+    stableRateSlope1: "0", // stableRateSlope1
+    stableRateSlope2: "0", // stableRateSlope2
+  },
 };
 // @note New token with CFX swappi pair
-const newTokenRelatedToCFX = "0x808f81acc4618a05c8253a7b41240468c08cd64c";
 const MAX_SUPPLY = ethers.utils.parseEther("100000000");
 const GOLEDOVESTINGLOCKTIMESTAMP = 1672023600;
 
@@ -864,7 +871,7 @@ async function main() {
   //   console.log("Deploy VariableDebtToken Impl at:", impl.address);
   // }
 
-  for (const token of ["xCFX"]) {
+  for (const token of ["USDC"]) {
     const market = addresses.Markets[token];
     if (market.atoken === "") {
       if (market.DefaultReserveInterestRateStrategy !== ""){
@@ -897,48 +904,47 @@ async function main() {
           defaultReserveInterestRateStrategy.address
         );
       }
-      // const _allocPoint = 10;
-      // const tx = await lendingPoolConfigurator.batchInitReserve([
-      //   {
-      //     aTokenImpl: addresses.ATokenImpl!,
-      //     stableDebtTokenImpl: addresses.StableDebtTokenImpl!,
-      //     variableDebtTokenImpl: addresses.VariableDebtTokenImpl!,
-      //     underlyingAssetDecimals: market.decimals,
-      //     interestRateStrategyAddress: market.DefaultReserveInterestRateStrategy!,
-      //     underlyingAsset: market.token,
-      //     treasury: addresses.Treasury,
-      //     incentivesController: addresses.ChefIncentivesController,
-      //     allocPoint: _allocPoint,
-      //     underlyingAssetName: token,
-      //     aTokenName: `Goledo interest bearing ${token}`,
-      //     aTokenSymbol: `g${token}`,
-      //     variableDebtTokenName: `Goledo variable debt bearing ${token}`,
-      //     variableDebtTokenSymbol: `variableDebt${token}`,
-      //     stableDebtTokenName: `Goledo stable debt bearing ${token}`,
-      //     stableDebtTokenSymbol: `stableDebt${token}`,
-      //     params: [],
-      //   },
-      // ]);
-      // console.log(`>> Deploying ${token} market, hash:`, tx.hash);
-      // await tx.wait();
-      // console.log(">> ✅ Done");
+      const _allocPoint = 20;
+      const tx = await lendingPoolConfigurator.batchInitReserve([
+        {
+          aTokenImpl: addresses.ATokenImpl!,
+          stableDebtTokenImpl: addresses.StableDebtTokenImpl!,
+          variableDebtTokenImpl: addresses.VariableDebtTokenImpl!,
+          underlyingAssetDecimals: market.decimals,
+          interestRateStrategyAddress: market.DefaultReserveInterestRateStrategy!,
+          underlyingAsset: market.token,
+          treasury: addresses.Treasury,
+          incentivesController: addresses.ChefIncentivesController,
+          allocPoint: _allocPoint,
+          underlyingAssetName: token,
+          aTokenName: `Goledo interest bearing ${token}`,
+          aTokenSymbol: `g${token}`,
+          variableDebtTokenName: `Goledo variable debt bearing ${token}`,
+          variableDebtTokenSymbol: `variableDebt${token}`,
+          stableDebtTokenName: `Goledo stable debt bearing ${token}`,
+          stableDebtTokenSymbol: `stableDebt${token}`,
+          params: [],
+        },
+      ]);
+      console.log(`>> Deploying ${token} market, hash:`, tx.hash);
+      await tx.wait();
+      console.log(">> ✅ Done");
 
-      // const reserveData = await lendingPool.getReserveData(market.token);
-      // console.log(
-      //   `Market[${token}] aToken[${reserveData.aTokenAddress}]`,
-      //   `sToken[${reserveData.stableDebtTokenAddress}]`,
-      //   `vToken[${reserveData.variableDebtTokenAddress}]`
-      // );
-      // market.atoken = reserveData.aTokenAddress;
-      // market.stoken = reserveData.stableDebtTokenAddress;
-      // market.vtoken = reserveData.variableDebtTokenAddress;
+      const reserveData = await lendingPool.getReserveData(market.token);
+      console.log(
+        `Market[${token}] aToken[${reserveData.aTokenAddress}]`,
+        `sToken[${reserveData.stableDebtTokenAddress}]`,
+        `vToken[${reserveData.variableDebtTokenAddress}]`
+      );
+      market.atoken = reserveData.aTokenAddress;
+      market.stoken = reserveData.stableDebtTokenAddress;
+      market.vtoken = reserveData.variableDebtTokenAddress;
     }
     if (market.oracle === "") {
-      const xCFXPriceFeed = await ethers.getContractFactory("xCFXPriceFeed", deployer);
-      const oracle = await xCFXPriceFeed.deploy(
-        newTokenRelatedToCFX,
+      const WitnetPriceFeed = await ethers.getContractFactory("WitnetPriceFeed", deployer);
+      const oracle = await WitnetPriceFeed.deploy(
         addresses.WitnetRouter,
-        addresses.Markets["CFX"].oracle,
+        market.witnetConfig.assetId,
         market.witnetConfig.decimals,
         market.witnetConfig.timeout
       );
@@ -946,21 +952,21 @@ async function main() {
       console.log(`Deploy Oracle for [${token}] at:`, oracle.address);
       market.oracle = oracle.address;
     }
-    // if ((await aaveOracle.getSourceOfAsset(market.token)) !== market.oracle) {
-    //   const tx = await aaveOracle.setAssetSources([market.token], [market.oracle]);
-    //   console.log(`>> SetAssetSources in AaveOracle for ${token}, hash:`, tx.hash);
-    //   await tx.wait();
-    //   console.log(">> ✅ Done");
-    // }
+    if ((await aaveOracle.getSourceOfAsset(market.token)) !== market.oracle) {
+      const tx = await aaveOracle.setAssetSources([market.token], [market.oracle]);
+      console.log(`>> SetAssetSources in AaveOracle for ${token}, hash:`, tx.hash);
+      await tx.wait();
+      console.log(">> ✅ Done");
+    }
   }
-  // let data = JSON.stringify(addresses, null, 2);
-  // fs.writeFileSync("formalScripts/" + network.name + "Address.json", data);
+  let data = JSON.stringify(addresses, null, 2);
+  fs.writeFileSync("formalScripts/" + network.name + "Address.json", data);
 
-  // // add gxCFX as reward
-  // await multiFeeDistribution.addReward(addresses.Markets.xCFX.atoken);
-  // await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.xCFX.token, true);
-  // await lendingPoolConfigurator.configureReserveAsCollateral(addresses.Markets.xCFX.token, 5000, 6500, 11000);
-  // await lendingPoolConfigurator.setReserveFactor(addresses.Markets.xCFX.token, 5000);
+  // add gUSDC as reward
+  await multiFeeDistribution.addReward(addresses.Markets.USDC.atoken);
+  await lendingPoolConfigurator.enableBorrowingOnReserve(addresses.Markets.USDC.token, true);
+  await lendingPoolConfigurator.configureReserveAsCollateral(addresses.Markets.USDC.token, 8000, 8500, 10500);
+  await lendingPoolConfigurator.setReserveFactor(addresses.Markets.USDC.token, 5000);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

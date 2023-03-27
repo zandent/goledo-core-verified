@@ -220,6 +220,7 @@ async function main() {
   
 
   let LendingPool = await ethers.getContractAt("LendingPool", "0x9FAD24f572045c7869117160A571B2e50b10d068", deployer);
+  console.log("WFTM getReserveData",await LendingPool.getReserveData("0x21be370D5312f44cB42ce377BC9b8a0cEF1A4C83"));
   console.log("WETH getReserveData",await LendingPool.getReserveData("0x74b23882a30290451A17c44f4F05243b6b58C76d"));
   
   console.log("WBTC getReserveData",await LendingPool.getReserveData("0x321162Cd933E2Be498Cd2267a90534A804051b11"));

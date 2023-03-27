@@ -260,10 +260,9 @@ contract xCFXPriceFeed is IPriceFeed {
   
   IWitnetPriceRouter public witnetRouter; 
 
-  bytes32 public witnetAssetID; 
+  IPriceFeed public CFXPriceFeed;
 
   uint256 public witnetDecimals; 
-
   
   uint256 public constant TARGET_DIGITS = 18;
 
@@ -307,13 +306,12 @@ contract xCFXPriceFeed is IPriceFeed {
   constructor(
     IExchangeroom _Exchangeroom,
     IWitnetPriceRouter _witnetRouter,
-    bytes32 _witnetAssetID,
+    IPriceFeed _CFXPriceFeed,
     uint256 _witnetDecimals,
     uint256 _timeout
   ) {
     Exchangeroom = _Exchangeroom;
-    witnetRouter = _witnetRouter;
-    witnetAssetID = _witnetAssetID;
+    CFXPriceFeed = _CFXPriceFeed;
     witnetDecimals = _witnetDecimals;
 
     TIMEOUT = _timeout;
@@ -439,19 +437,17 @@ contract xCFXPriceFeed is IPriceFeed {
   
 
   function _getCurrentWitnetResponse() internal view returns (WitnetResponse memory witnetResponse) {
-    try witnetRouter.valueFor(witnetAssetID) returns (
-      int256 lastPrice,
-      uint256 lastTimestamp,
-      uint256 latestUpdateStatus
+    try CFXPriceFeed.fetchPrice() returns (
+      uint256 lastPrice
     ) {
       
       // witnetResponse.lastPrice = lastPrice;
-      witnetResponse.timestamp = lastTimestamp;
-      witnetResponse.status = latestUpdateStatus;
+      witnetResponse.timestamp = block.timestamp;
+      witnetResponse.status = 200;
 
       IExchangeroom.ExchangeSummary memory ExchangeSummary = Exchangeroom.Summary();
 
-      witnetResponse.lastPrice = uint256(lastPrice).mul(ExchangeSummary.xcfxvalues).div(uint256(1 ether));
+      witnetResponse.lastPrice = uint256(lastPrice).mul(ExchangeSummary.xcfxvalues).div(uint256(1 ether)).div(10**12);
       return (witnetResponse);
     } catch {
       witnetResponse.status = 404;

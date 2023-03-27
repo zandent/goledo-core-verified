@@ -94,12 +94,26 @@
       "atoken": "0x06fB6757aa45E317FED3188144bcB0b72F2e7bB7",
       "stoken": "0x45Ee411bfb5B6c560015b0948612aEE0E9945D27",
       "vtoken": "0x1B404f905048AC3091B0F6c6E45A3212b24261Bc",
-      "oracle": "0x73E9b2db4BC886Ada76AC141DadFCd89b4a3E13d",
+      "oracle": "0x37dB91B7604397c23B5b4FD1f1d3b1114e7534D1",
       "DefaultReserveInterestRateStrategy": "0xfC49C4DC6638760Bfc5E723819F6044ae5a28528",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
         "timeout": 7200
+      }
+    },
+    "USDC": {
+      "token": "0x6963efed0ab40f6c3d7bda44a05dcf1437c44372",
+      "decimals": 18,
+      "atoken": "0xF20e046689AdF30711A67afF975F16D47FE72abA",
+      "stoken": "0x2f894dBAc081be567B317DA24a43125ACF2CA8E1",
+      "vtoken": "0x7e03D111D7d2819Ab19BF326518f54D8e0920E28",
+      "oracle": "0x6FA8aa3f161bCb8CdA78114001F632cf57b8c047",
+      "DefaultReserveInterestRateStrategy": "0x58Aa57f01f6CD5FA64B6F682F267Ef490f840224",
+      "witnetConfig": {
+        "assetId": "0x4c80cf2e5b3d17b98f6f24fc78f661982b8ef656c3b75a038f7bfc6f93c1b20e",
+        "decimals": 6,
+        "timeout": 172800
       }
     }
   }
