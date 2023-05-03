@@ -711,7 +711,18 @@ async function main() {
   }
   // console.log("userInfo: ", await chefIncentivesController.userInfo("0xbB95Fdc15B2ccDab60B1403f225d3f8182f521ef", "0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
   // console.log("userBaseClaimable: ", await chefIncentivesController.userBaseClaimable("0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
-
+  let rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
+  console.log("addresses.Markets['CFX']['atoken']: ", rate.mul(1000000).div(39));
+  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDT']['atoken'], addresses.Markets['USDT']['vtoken']]);
+  console.log("addresses.Markets['USDT']['atoken']: ", rate.mul(1000000).div(100));
+  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WETH']['atoken'], addresses.Markets['WETH']['vtoken']]);
+  console.log("addresses.Markets['WETH']['atoken']: ", rate.mul(1000000).div(178772));
+  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WBTC']['atoken'], addresses.Markets['WBTC']['vtoken']]);
+  console.log("addresses.Markets['WBTC']['atoken']: ", rate.mul(1000000).div(2817833));
+  console.log("addresses.Markets['xCFX']['atoken']: ", await chefIncentivesController.claimableRewardRate([addresses.Markets['xCFX']['atoken'], addresses.Markets['xCFX']['vtoken']]));
+  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDC']['atoken'], addresses.Markets['USDC']['vtoken']]);
+  console.log("addresses.Markets['USDC']['atoken']: ", rate.mul(1000000).div(100));
+15 1 3.48 2.8 0 /22
   // console.log("usdt poolInfo: ", await chefIncentivesController.poolInfo("0x9E9D93b39437F7c6ecD7Bf4e52E9a24c50E20FE8"));
   // const StableDebtToken = await ethers.getContractAt("StableDebtToken", "0x189Dc84dEb8bB3eDC0b7596aAfFA382921535581", deployer);
   // console.log("Found usdt StableDebtToken at:", StableDebtToken.address);
