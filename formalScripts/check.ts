@@ -711,18 +711,56 @@ async function main() {
   }
   // console.log("userInfo: ", await chefIncentivesController.userInfo("0xbB95Fdc15B2ccDab60B1403f225d3f8182f521ef", "0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
   // console.log("userBaseClaimable: ", await chefIncentivesController.userBaseClaimable("0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
-  let rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
-  console.log("addresses.Markets['CFX']['atoken']: ", rate.mul(1000000).div(39));
-  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDT']['atoken'], addresses.Markets['USDT']['vtoken']]);
-  console.log("addresses.Markets['USDT']['atoken']: ", rate.mul(1000000).div(100));
-  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WETH']['atoken'], addresses.Markets['WETH']['vtoken']]);
-  console.log("addresses.Markets['WETH']['atoken']: ", rate.mul(1000000).div(178772));
-  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WBTC']['atoken'], addresses.Markets['WBTC']['vtoken']]);
-  console.log("addresses.Markets['WBTC']['atoken']: ", rate.mul(1000000).div(2817833));
-  console.log("addresses.Markets['xCFX']['atoken']: ", await chefIncentivesController.claimableRewardRate([addresses.Markets['xCFX']['atoken'], addresses.Markets['xCFX']['vtoken']]));
-  rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDC']['atoken'], addresses.Markets['USDC']['vtoken']]);
-  console.log("addresses.Markets['USDC']['atoken']: ", rate.mul(1000000).div(100));
-15 1 3.48 2.8 0 /22
+  //oldRewards       gol, wcfx, usdt, weth,   wbtc,   xcfx usdc* 100
+  var rewardPrices = [12, 28, 100,   182823, 2739516, 29, 100];
+  let rewardsPerSecond = await chefIncentivesController.rewardsPerSecond();
+  rewardsPerSecond = BigNumber.from(rewardsPerSecond);
+  let totalAllocPoint = await chefIncentivesController.totalAllocPoint();
+  totalAllocPoint = BigNumber.from(totalAllocPoint);
+  var chefIncentivesControllerrewardsRate : Array<BigNumber> = [];
+  var j = 0;
+  for (const token of ["CFX", "USDT", "WETH", "WBTC", "xCFX", "USDC"]) {
+    const market = addresses.Markets[token];
+    var poolInfo = await chefIncentivesController.poolInfo(market.atoken);
+    var poolInfototalSupply = BigNumber.from(poolInfo.totalSupply);
+    var poolInfoallocPoint = BigNumber.from(poolInfo.allocPoint);
+    var vpoolInfo = await chefIncentivesController.poolInfo(market.vtoken);
+    var vpoolInfototalSupply = BigNumber.from(vpoolInfo.totalSupply);
+    var vpoolInfoallocPoint = BigNumber.from(vpoolInfo.allocPoint);
+    var aapr = rewardsPerSecond.mul(poolInfoallocPoint).mul(rewardPrices[0]).mul(31536000).mul(1e4).div(rewardPrices[j+1]).div(totalAllocPoint).div(poolInfototalSupply);
+    var vapr = rewardsPerSecond.mul(vpoolInfoallocPoint).mul(rewardPrices[0]).mul(31536000).mul(1e4).div(rewardPrices[j+1]).div(totalAllocPoint).div(vpoolInfototalSupply);
+    chefIncentivesControllerrewardsRate.push(aapr.add(vapr));
+    console.log(`a${token} apy*1e4: ${aapr} v${token} apy*1e4: ${vapr}`)
+    j = j + 1;
+  }
+  var k = 0;
+  var apr = BigNumber.from(0);
+  for(const e of chefIncentivesControllerrewardsRate){
+    apr = apr.add(e);
+    k = k + 1;
+  }
+  console.log(`gol vest apr*1e4: ${apr}`);
+  // let rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
+  // console.log("addresses.Markets['CFX']['atoken']: ", rate.mul(1000000).div(29));
+  // rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDT']['atoken'], addresses.Markets['USDT']['vtoken']]);
+  // console.log("addresses.Markets['USDT']['atoken']: ", rate.mul(1000000).div(100));
+  // rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WETH']['atoken'], addresses.Markets['WETH']['vtoken']]);
+  // console.log("addresses.Markets['WETH']['atoken']: ", rate.mul(1000000).div(182823));
+  // rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['WBTC']['atoken'], addresses.Markets['WBTC']['vtoken']]);
+  // console.log("addresses.Markets['WBTC']['atoken']: ", rate.mul(1000000).div(2739516));
+
+  console.log("before timestamp is", Math.floor(Date.now() / 1000));
+  let amt = await chefIncentivesController.claimableReward("0x3cF763e826C76560a4fC75a24E7eA021967fae31", [addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
+  // rate =  await chefIncentivesController.claimableRewardRate([addresses.Markets['xCFX']['atoken'], addresses.Markets['xCFX']['vtoken']]);
+  console.log("addresses.Markets['CFX']['atoken'] pre amt: ", amt);
+  await new Promise(r => setTimeout(r, 15000));
+  console.log("post timestamp is", Math.floor(Date.now() / 1000));
+  amt = await chefIncentivesController.claimableReward("0x3cF763e826C76560a4fC75a24E7eA021967fae31", [addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
+  console.log("addresses.Markets['CFX']['atoken'] post amt: ", amt);
+
+
+  // rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDC']['atoken'], addresses.Markets['USDC']['vtoken']]);
+  // console.log("addresses.Markets['USDC']['atoken']: ", rate.mul(1000000).div(100));
   // console.log("usdt poolInfo: ", await chefIncentivesController.poolInfo("0x9E9D93b39437F7c6ecD7Bf4e52E9a24c50E20FE8"));
   // const StableDebtToken = await ethers.getContractAt("StableDebtToken", "0x189Dc84dEb8bB3eDC0b7596aAfFA382921535581", deployer);
   // console.log("Found usdt StableDebtToken at:", StableDebtToken.address);
@@ -772,25 +810,26 @@ async function main() {
   // // // console.log(" vtoken totalSupply", await vtoken.totalSupply());
   
   console.log("MultiFeeDistribution claimableRewards()", await multiFeeDistribution.claimableRewards("0x4be5fcD8C2f11DA922433b5D0582A011b1964838"));
-  //oldRewards gol,  wcfx, usdt, weth,   wbtc,     xcfx * 100
-  var rewardPrices = [3, 19, 100,   156559, 2241250, 20];
-  var oldRewards = await multiFeeDistribution.claimableRewards("0x4be5fcD8C2f11DA922433b5D0582A011b1964838");
+
+  var oldRewards = await multiFeeDistribution.claimableRewards("0x2449643F006a2cdD38B0f84B3D34Dea6308Ceb3E");
   console.log("MultiFeeDistribution claimableRewards()", oldRewards);
   var blockNumBefore = await ethers.provider.getBlockNumber();
   var blockBefore = await ethers.provider.getBlock(blockNumBefore);
   var timestampBefore = blockBefore.timestamp;
-  console.log("before timestamp is", timestampBefore);
+  console.log("before timestamp is", Math.floor(Date.now() / 1000));
   await new Promise(r => setTimeout(r, 15000));
-  var newRewards = await multiFeeDistribution.claimableRewards("0x4be5fcD8C2f11DA922433b5D0582A011b1964838");
+  var newRewards = await multiFeeDistribution.claimableRewards("0x2449643F006a2cdD38B0f84B3D34Dea6308Ceb3E");
   console.log("MultiFeeDistribution claimableRewards()", newRewards);
   var blockNumAfter = await ethers.provider.getBlockNumber();
   var blockAfter = await ethers.provider.getBlock(blockNumAfter);
   var timestampAfter = blockAfter.timestamp;
-  console.log("post timestamp is", timestampAfter);
+  console.log("post timestamp is", Math.floor(Date.now() / 1000));
   // let multiFeeDistributionrate = (BigNumber.from(newRewards[0]['amount']).sub(BigNumber.from(oldRewards[0]['amount']))).div(timestampAfter - timestampBefore);
   // console.log("multiFeeDistribution reward rate = ", multiFeeDistributionrate);
-  console.log("multiFeeDistribution.lockedSupply()", await multiFeeDistribution.lockedSupply());
-  console.log("multiFeeDistribution.totalSupply()", await multiFeeDistribution.totalSupply());
+  let lockedSupply = await multiFeeDistribution.lockedSupply();
+  let totalSupply = await multiFeeDistribution.totalSupply();
+  console.log("multiFeeDistribution.lockedSupply()", lockedSupply);
+  console.log("multiFeeDistribution.totalSupply()", totalSupply);
   var rateArray = [];
   var i = 0;
   let xcfxrewardDiff = BigNumber.from(newRewards[5]['amount']).sub(BigNumber.from(oldRewards[5]['amount'])).mul(rewardPrices[5]);
@@ -804,19 +843,19 @@ async function main() {
   var rpt = await multiFeeDistribution.rewardPerToken(addresses.GoledoToken);
   var rData = await multiFeeDistribution.rewardData(addresses.GoledoToken);
   var lastTimeRewardApplicable = await multiFeeDistribution.lastTimeRewardApplicable(addresses.GoledoToken);
-  var actRate = BigNumber.from(rpt).div(604800);
-  var actRateWithPrice = actRate.div("1000000000000");
+  var actRate = BigNumber.from(rData.rewardRate);
+  var actRateWithPrice = actRate.mul(31536000).div("1").div(lockedSupply);
   console.log(`rate: ${actRateWithPrice}`)
   var rewardsRate : Array<BigNumber> = [];
   rewardsRate.push(actRateWithPrice);
   var j = 0;
-  for (const token of ["CFX", "USDT", "WETH", "WBTC", "xCFX"]) {
+  for (const token of ["CFX", "USDT", "WETH", "WBTC", "xCFX", "USDC"]) {
     const market = addresses.Markets[token];
     var rpt = await multiFeeDistribution.rewardPerToken(market.atoken);
     var rData = await multiFeeDistribution.rewardData(market.atoken);
     var lastTimeRewardApplicable = await multiFeeDistribution.lastTimeRewardApplicable(market.atoken);
-    var actRate = BigNumber.from(rpt).div(604800);
-    var actRateWithPrice = actRate.mul(rewardPrices[j+1]).div(rewardPrices[0]).div("1000000000000");
+    var actRate = BigNumber.from(rData.rewardRate);
+    var actRateWithPrice = actRate.mul(rewardPrices[j+1]).mul(31536000).div(rewardPrices[0]).div("1").div(totalSupply);
     rewardsRate.push(actRateWithPrice);
     console.log(`rate: ${actRateWithPrice}`)
     j = j + 1;
@@ -829,9 +868,9 @@ async function main() {
   var apr2 = BigNumber.from(0);
   for(const e of rewardsRate){
     if(k!=0){
-      apr2 = apr2.add(e.mul(31536000).div("1000000000000000000"));
+      apr2 = apr2.add(e);
     }
-    apr1 = apr1.add(e.mul(31536000).div("1000000000000000000"));
+    apr1 = apr1.add(e);
     k = k + 1;
   }
   console.log(`lock apr ${apr1}`);
