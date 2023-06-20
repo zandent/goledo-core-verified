@@ -1,6 +1,6 @@
 {
-  "Admin": "0xd55A4ECB047A5738FcF2996Ec37230485376326c",
-  "EmergencyAdmin": "0xd55A4ECB047A5738FcF2996Ec37230485376326c",
+  "Admin": "0x9141F4C8EacBe56490D0D52184F590Dee4c4799e",
+  "EmergencyAdmin": "0x9141F4C8EacBe56490D0D52184F590Dee4c4799e",
   "Treasury": "0x7d236c0486c9579507C67B36d175990CAb5100fC",
   "WitnetRouter": "0xd39d4d972c7e166856c4eb29e54d3548b4597f53",
   "WCFX": "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
@@ -114,6 +114,20 @@
         "assetId": "0x4c80cf2e5b3d17b98f6f24fc78f661982b8ef656c3b75a038f7bfc6f93c1b20e",
         "decimals": 6,
         "timeout": 172800
+      }
+    },
+    "NUT": {
+      "token": "0xfe197e7968807b311d476915db585831b43a7e3b",
+      "decimals": 18,
+      "atoken": "0xcbA81566c4d9cD22F685FC77D0739cb5e4571208",
+      "stoken": "0x25f0CAEA170D1e3D4C20ED55677c605B4D712B32",
+      "vtoken": "0x550eE1e5d54E7c271D9Db7C27636D1e46D3C65dD",
+      "oracle": "0xCAe2Da4f39B4E1Cc5fdc9184c36D029Dbae7f575",
+      "DefaultReserveInterestRateStrategy": "0x0dbDD6aBb3eA3b26f108731907F14984a6EfC653",
+      "witnetConfig": {
+        "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
+        "decimals": 6,
+        "timeout": 7200
       }
     }
   }

@@ -290,6 +290,8 @@ contract SwappiPairPriceFeed is IPriceFeed {
   //Add a pair of custom token and CFX
   ISwappiPair public SwappiPair;
   address public baseToken;
+
+  IPriceFeed CFXPriceFeed;
   
   IWitnetPriceRouter public witnetRouter; 
 
@@ -341,10 +343,12 @@ contract SwappiPairPriceFeed is IPriceFeed {
     ISwappiPair _SwappiPair,
     address _baseToken,
     IWitnetPriceRouter _witnetRouter,
+    IPriceFeed _CFXPriceFeed,
     bytes32 _witnetAssetID,
     uint256 _witnetDecimals,
     uint256 _timeout
   ) {
+    CFXPriceFeed = _CFXPriceFeed;
     SwappiPair = _SwappiPair;
     baseToken = _baseToken;
     witnetRouter = _witnetRouter;
@@ -474,23 +478,21 @@ contract SwappiPairPriceFeed is IPriceFeed {
   
 
   function _getCurrentWitnetResponse() internal view returns (WitnetResponse memory witnetResponse) {
-    try witnetRouter.valueFor(witnetAssetID) returns (
-      int256 lastPrice,
-      uint256 lastTimestamp,
-      uint256 latestUpdateStatus
+    try CFXPriceFeed.fetchPrice() returns (
+      uint256 lastPrice
     ) {
       
       // witnetResponse.lastPrice = lastPrice;
-      witnetResponse.timestamp = lastTimestamp;
-      witnetResponse.status = latestUpdateStatus;
+      witnetResponse.timestamp = block.timestamp;
+      witnetResponse.status = 200;
 
       address token0 = SwappiPair.token0();
       (uint112 reserve0, uint112 reserve1,) = SwappiPair.getReserves();
 
       if (token0 == baseToken){
-        witnetResponse.lastPrice = uint256(lastPrice).mul(uint256(reserve0)).div(uint256(reserve1));
+        witnetResponse.lastPrice = uint256(lastPrice).mul(uint256(reserve0)).div(uint256(reserve1)).div(10**12);
       }else{
-        witnetResponse.lastPrice = uint256(lastPrice).mul(uint256(reserve1)).div(uint256(reserve0));
+        witnetResponse.lastPrice = uint256(lastPrice).mul(uint256(reserve1)).div(uint256(reserve0)).div(10**12);
       }
 
       return (witnetResponse);
