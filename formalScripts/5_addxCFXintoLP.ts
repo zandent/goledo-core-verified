@@ -162,6 +162,20 @@ const ADDRESSES: {
           timeout: 60 * 60 * 48,
         },
       },
+      xCFX: {
+        token: "0x092690013ef7af87eaf45030906baa86b8faa411",
+        decimals: 18,
+        atoken: "",
+        stoken: "",
+        vtoken: "",
+        oracle: "",
+        DefaultReserveInterestRateStrategy: "",
+        witnetConfig: {
+          assetId: "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
+          decimals: 6,
+          timeout: 60 * 60 * 2,
+        },
+      },
     },
   },
   espace: {
@@ -324,6 +338,8 @@ const RATE_STRATEGY: {
 };
 // @note New token with CFX swappi pair
 const newTokenRelatedToCFX = "0x808f81acc4618a05c8253a7b41240468c08cd64c";
+//testnet exchangeroom address
+// const newTokenRelatedToCFX = "0x0b91c3914df0b524d4e65deb5a05c56bc2cde3b4";
 const MAX_SUPPLY = ethers.utils.parseEther("100000000");
 const GOLEDOVESTINGLOCKTIMESTAMP = 1672023600;
 
@@ -922,7 +938,6 @@ async function main() {
       // console.log(`>> Deploying ${token} market, hash:`, tx.hash);
       // await tx.wait();
       // console.log(">> ✅ Done");
-
       // const reserveData = await lendingPool.getReserveData(market.token);
       // console.log(
       //   `Market[${token}] aToken[${reserveData.aTokenAddress}]`,

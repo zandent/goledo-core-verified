@@ -87,6 +87,20 @@
         "decimals": 6,
         "timeout": 172800
       }
+    },
+    "xCFX": {
+      "token": "0x092690013ef7af87eaf45030906baa86b8faa411",
+      "decimals": 18,
+      "atoken": "0x1676D785eC9436Abc0d03e33f02b0C63607D1645",
+      "stoken": "0x5A8e1135ecf730f665Ce0A48109b01CC0a68BD71",
+      "vtoken": "0xEc0f7BBF2179f9Aa762636d977eE8841292A6128",
+      "oracle": "0x3c3D99b5a057eaDD2e838A7b6B9CBd30c0a2b388",
+      "DefaultReserveInterestRateStrategy": "0xF79F62d1890b3d9460f4c2bE50dC08230F319a77",
+      "witnetConfig": {
+        "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
+        "decimals": 6,
+        "timeout": 7200
+      }
     }
   }
 }
