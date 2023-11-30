@@ -1,7 +1,7 @@
 {
   "Admin": "0x9141F4C8EacBe56490D0D52184F590Dee4c4799e",
   "EmergencyAdmin": "0x9141F4C8EacBe56490D0D52184F590Dee4c4799e",
-  "Treasury": "0x7d236c0486c9579507C67B36d175990CAb5100fC",
+  "Treasury": "0x38f920f5c6ac95fc5fe768917fd43893dd9f7ad5",
   "WitnetRouter": "0xd39d4d972c7e166856c4eb29e54d3548b4597f53",
   "WCFX": "0x14b2d3bc65e74dae1030eafd8ac30c533c976a9b",
   "SwappiRouter": "0x62b0873055bf896dd869e172119871ac24aea305",
@@ -130,5 +130,14 @@
         "timeout": 7200
       }
     }
-  }
+  },
+  "ATokenImplV2": "0xD12dFc7F12a4Ccd93BAe3FA91a90fb84B30049Ce",
+  "StableDebtTokenImplV2": "0x6b69Fc5d2DcE1C37e0E6716ee4a83a62fAEAbEa4",
+  "VariableDebtTokenImplV2": "0xfeabF90E77FB35AdF6159B2D1238B8D4470fD349",
+  "SwappiLPV2": "0x157D7fCcF8067eb1444c5D57b063b1F1D8C903Ad",
+  "IncentiveDataProviderV2": "0x509Cb432d2fb377b551AB87C6e6C89E0243eE69F",
+  "GoledoTokenV2": "0x19aae9e4269ab47ff291125b5c0c2f7296a635ab",
+  "MultiFeeDistributionV2": "0x38f920f5c6ac95fc5fe768917fd43893dd9f7ad5",
+  "ChefIncentivesControllerV2": "0x5dc526bcbe999603ab6ad9d854ccad5b3ca54cfa",
+  "MasterChefV2": "0x8ebd2628b281af64e67caac61984b19362af7cff"
 }

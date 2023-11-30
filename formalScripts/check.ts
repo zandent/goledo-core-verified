@@ -711,15 +711,15 @@ async function main() {
   }
   // console.log("userInfo: ", await chefIncentivesController.userInfo("0xbB95Fdc15B2ccDab60B1403f225d3f8182f521ef", "0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
   // console.log("userBaseClaimable: ", await chefIncentivesController.userBaseClaimable("0xad085e56f5673fd994453bbcdfe6828aa659cb0d"));
-  //oldRewards       gol, wcfx, usdt, weth,   wbtc,   xcfx usdc* 100
-  var rewardPrices = [12, 28, 100,   182823, 2739516, 29, 100];
+  //oldRewards       gol, wcfx, usdt, weth,   wbtc,  xcfx  usdc  nut* 100
+  var rewardPrices = [8478, 17, 100,   186895, 2926329, 18, 100, 2305];
   let rewardsPerSecond = await chefIncentivesController.rewardsPerSecond();
   rewardsPerSecond = BigNumber.from(rewardsPerSecond);
   let totalAllocPoint = await chefIncentivesController.totalAllocPoint();
   totalAllocPoint = BigNumber.from(totalAllocPoint);
   var chefIncentivesControllerrewardsRate : Array<BigNumber> = [];
   var j = 0;
-  for (const token of ["CFX", "USDT", "WETH", "WBTC", "xCFX", "USDC"]) {
+  for (const token of ["CFX", "USDT", "WETH", "WBTC", "xCFX", "USDC", "NUT"]) {
     const market = addresses.Markets[token];
     var poolInfo = await chefIncentivesController.poolInfo(market.atoken);
     var poolInfototalSupply = BigNumber.from(poolInfo.totalSupply);
@@ -733,13 +733,13 @@ async function main() {
     console.log(`a${token} apy*1e4: ${aapr} v${token} apy*1e4: ${vapr}`)
     j = j + 1;
   }
-  var k = 0;
-  var apr = BigNumber.from(0);
-  for(const e of chefIncentivesControllerrewardsRate){
-    apr = apr.add(e);
-    k = k + 1;
-  }
-  console.log(`gol vest apr*1e4: ${apr}`);
+  // var k = 0;
+  // var apr = BigNumber.from(0);
+  // for(const e of chefIncentivesControllerrewardsRate){
+  //   apr = apr.add(e);
+  //   k = k + 1;
+  // }
+  // console.log(`gol vest apr*1e4: ${apr}`);
   // let rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['CFX']['atoken'], addresses.Markets['CFX']['vtoken']]);
   // console.log("addresses.Markets['CFX']['atoken']: ", rate.mul(1000000).div(29));
   // rate = await chefIncentivesController.claimableRewardRate([addresses.Markets['USDT']['atoken'], addresses.Markets['USDT']['vtoken']]);

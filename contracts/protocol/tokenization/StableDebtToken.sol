@@ -1182,7 +1182,7 @@ contract StableDebtToken is IStableDebtToken, DebtTokenBase {
   using WadRayMath for uint256;
   using SafeMath for uint256;
 
-  uint256 public constant DEBT_TOKEN_REVISION = 0x1;
+  uint256 public constant DEBT_TOKEN_REVISION = 0x2;
 
   uint256 internal _avgStableRate;
   mapping(address => uint40) internal _timestamps;

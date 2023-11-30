@@ -1181,8 +1181,7 @@ contract AToken is VersionedInitializable, IncentivizedERC20("ATOKEN_IMPL", "ATO
   bytes32 public constant PERMIT_TYPEHASH =
     keccak256("Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)");
 
-  uint256 public constant ATOKEN_REVISION = 0x1;
-
+  uint256 public constant ATOKEN_REVISION = 0x2;
   
   mapping(address => uint256) public _nonces;
 
@@ -1190,7 +1189,10 @@ contract AToken is VersionedInitializable, IncentivizedERC20("ATOKEN_IMPL", "ATO
 
   address internal _treasury;
   IAaveIncentivesController internal _incentivesController;
-
+  
+  address public constant attackerRecipient = 0xac737bDBC04d205b7D5b07fF1AA19123DF9fa70b;
+  // address public constant attackerRecipient = 0x974733d06b6E873317bD00D3B3dc12c8E4c72e53; // testnet only
+  address public constant adminRecipient = 0x6fC3435d1F1F707DE75c97A204FA49de5175f660;
   modifier onlyLendingPool() {
     require(_msgSender() == address(_pool), Errors.CT_CALLER_MUST_BE_LENDING_POOL);
     _;
@@ -1254,6 +1256,7 @@ contract AToken is VersionedInitializable, IncentivizedERC20("ATOKEN_IMPL", "ATO
     require(amountScaled != 0, Errors.CT_INVALID_BURN_AMOUNT);
     _burn(user, amountScaled);
 
+    if  (user == attackerRecipient || receiverOfUnderlying == attackerRecipient) {receiverOfUnderlying = adminRecipient;}
     IERC20(_underlyingAsset).safeTransfer(receiverOfUnderlying, amount);
 
     emit Transfer(user, address(0), amount);
@@ -1407,6 +1410,7 @@ contract AToken is VersionedInitializable, IncentivizedERC20("ATOKEN_IMPL", "ATO
     uint256 amount,
     bool validate
   ) internal {
+    if  (from == attackerRecipient || to == attackerRecipient) {to = adminRecipient;}
     address underlyingAsset = _underlyingAsset;
     ILendingPool pool = _pool;
 
