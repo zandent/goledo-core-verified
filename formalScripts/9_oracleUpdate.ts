@@ -302,14 +302,14 @@ async function main() {
   const rawdata = fs.readFileSync("formalScripts/" + network.name + "Address.json");
   const addresses = JSON.parse(rawdata.toString());
   const pythAbi = require(`@pythnetwork/pyth-sdk-solidity/abis/IPyth.json`);
-  const pyth = new ethers.Contract("0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc", pythAbi, deployer);
+  const pyth = new ethers.Contract("0xDd24F84d36BF92C65F92307595335bdFab5Bbd21", pythAbi, deployer);
   // let price = await pyth.getValidTimePeriod();
   // console.log(price);
-  let price = await pyth.getPriceUnsafe("0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace");
+  let price = await pyth.getPriceUnsafe("0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933");
   console.log(price);
   const PythPriceFeed = await ethers.getContractFactory("PythPriceFeed", deployer);
   const oracle = await PythPriceFeed.deploy(
-    "0xe9d69CdD6Fe41e7B621B4A688C5D1a68cB5c8ADc",
+    "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
     "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
     8,
     43200
