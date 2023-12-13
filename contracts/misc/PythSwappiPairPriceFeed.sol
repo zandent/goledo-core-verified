@@ -1,5 +1,55 @@
 pragma abicoder v2;
 pragma solidity 0.7.6;
+interface ISwappiPair {
+    event Approval(address indexed owner, address indexed spender, uint value);
+    event Transfer(address indexed from, address indexed to, uint value);
+
+    function name() external pure returns (string memory);
+    function symbol() external pure returns (string memory);
+    function decimals() external pure returns (uint8);
+    function totalSupply() external view returns (uint);
+    function balanceOf(address owner) external view returns (uint);
+    function allowance(address owner, address spender) external view returns (uint);
+
+    function approve(address spender, uint value) external returns (bool);
+    function transfer(address to, uint value) external returns (bool);
+    function transferFrom(address from, address to, uint value) external returns (bool);
+
+    function DOMAIN_SEPARATOR() external view returns (bytes32);
+    function PERMIT_TYPEHASH() external pure returns (bytes32);
+    function nonces(address owner) external view returns (uint);
+
+    function permit(address owner, address spender, uint value, uint deadline, uint8 v, bytes32 r, bytes32 s) external;
+
+    event Mint(address indexed sender, uint amount0, uint amount1);
+    event Burn(address indexed sender, uint amount0, uint amount1, address indexed to);
+    event Swap(
+        address indexed sender,
+        uint amount0In,
+        uint amount1In,
+        uint amount0Out,
+        uint amount1Out,
+        address indexed to
+    );
+    event Sync(uint112 reserve0, uint112 reserve1);
+
+    function MINIMUM_LIQUIDITY() external pure returns (uint);
+    function factory() external view returns (address);
+    function token0() external view returns (address);
+    function token1() external view returns (address);
+    function getReserves() external view returns (uint112 reserve0, uint112 reserve1, uint32 blockTimestampLast);
+    function price0CumulativeLast() external view returns (uint);
+    function price1CumulativeLast() external view returns (uint);
+    function kLast() external view returns (uint);
+
+    function mint(address to) external returns (uint liquidity);
+    function burn(address to) external returns (uint amount0, uint amount1);
+    function swap(uint amount0Out, uint amount1Out, address to, bytes calldata data) external;
+    function skim(address to) external;
+    function sync() external;
+
+    function initialize(address, address) external;
+}
 contract PythStructs {
     // A price with a degree of uncertainty, represented as a price +- a confidence interval.
     //
@@ -290,24 +340,6 @@ library SafeMath {
         return a % b;
     }
 }
-interface IExchangeroom {
-  /// @title ExchangeSummary
-  /// @custom:field totalxcfxs
-  /// @custom:field xcfxvalues
-  /// @custom:field alloflockedvotes
-  /// @custom:field xCFXincrease
-  /// @custom:field unlockingCFX
-  struct ExchangeSummary {
-    uint256 totalxcfxs;
-    uint256 xcfxvalues;
-    uint256 alloflockedvotes;
-    uint256 xCFXincrease;
-    uint256 unlockingCFX;
-  }
-  /// @dev get the pos pool Summary
-  /// @return _exchangeSummary ExchangeSummary
-  function Summary() external view returns (ExchangeSummary memory);
-}
 interface IPriceFeed {
   
   function fetchPrice() external view returns (uint256);
@@ -315,9 +347,13 @@ interface IPriceFeed {
   function updatePrice() external returns (uint256);
 }
 
-contract xCFXPythPriceFeed is IPriceFeed {
+contract PythSwappiPairPriceFeed is IPriceFeed {
   using SafeMath for uint256;
-  IExchangeroom public Exchangeroom;
+
+  //Add a pair of custom token and CFX
+  ISwappiPair public SwappiPair;
+  address public baseToken;
+
   IPyth public pythRouter; 
   bytes32 public pythAssetID; 
   uint256 public pythDecimals; 
@@ -346,13 +382,16 @@ contract xCFXPythPriceFeed is IPriceFeed {
   
 
   constructor(
-    IExchangeroom _Exchangeroom,
+    ISwappiPair _SwappiPair,
+    address _baseToken,
     IPyth _pythRouter,
     bytes32 _pythAssetID,
     uint256 _pythDecimals,
     uint256 _timeout
   ) {
-    Exchangeroom = _Exchangeroom;
+    SwappiPair = _SwappiPair;
+    baseToken = _baseToken;
+
     pythRouter = _pythRouter;
     pythAssetID = _pythAssetID;
     pythDecimals = _pythDecimals;
@@ -483,8 +522,14 @@ contract xCFXPythPriceFeed is IPriceFeed {
     try pythRouter.getPriceUnsafe(pythAssetID) returns (
       PythStructs.Price memory retPrice
     ) {
-      IExchangeroom.ExchangeSummary memory ExchangeSummary = Exchangeroom.Summary();
-      pythResponse.lastPrice = uint256(retPrice.price).mul(ExchangeSummary.xcfxvalues).div(uint256(1 ether));
+      address token0 = SwappiPair.token0();
+      (uint112 reserve0, uint112 reserve1,) = SwappiPair.getReserves();
+
+      if (token0 == baseToken){
+        pythResponse.lastPrice = uint256(retPrice.price).mul(uint256(reserve0)).div(uint256(reserve1));
+      }else{
+        pythResponse.lastPrice = uint256(retPrice.price).mul(uint256(reserve1)).div(uint256(reserve0));
+      }
       pythResponse.timestamp = retPrice.publishTime;
       pythResponse.status = 0;
 

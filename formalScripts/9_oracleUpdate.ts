@@ -301,21 +301,84 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   const rawdata = fs.readFileSync("formalScripts/" + network.name + "Address.json");
   const addresses = JSON.parse(rawdata.toString());
-  const pythAbi = require(`@pythnetwork/pyth-sdk-solidity/abis/IPyth.json`);
-  const pyth = new ethers.Contract("0xDd24F84d36BF92C65F92307595335bdFab5Bbd21", pythAbi, deployer);
-  // let price = await pyth.getValidTimePeriod();
+  if (addresses.AaveOracle !== "") {
+    aaveOracle = await ethers.getContractAt("AaveOracle", addresses.AaveOracle, deployer);
+    console.log("Found AaveOracle at:", aaveOracle.address);
+  } else {
+    const AaveOracle = await ethers.getContractFactory("AaveOracle", deployer);
+    aaveOracle = await AaveOracle.deploy([], []);
+    await aaveOracle.deployed();
+    addresses.AaveOracle = aaveOracle.address;
+    console.log("Deploy AaveOracle at:", aaveOracle.address);
+  }
+  // const pythAbi = require(`@pythnetwork/pyth-sdk-solidity/abis/IPyth.json`);
+  // const pyth = new ethers.Contract("0xDd24F84d36BF92C65F92307595335bdFab5Bbd21", pythAbi, deployer);
+  // // let price = await pyth.getValidTimePeriod();
+  // // console.log(price);
+  // let price = await pyth.getPriceUnsafe("0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933");
   // console.log(price);
-  let price = await pyth.getPriceUnsafe("0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933");
-  console.log(price);
-  const PythPriceFeed = await ethers.getContractFactory("PythPriceFeed", deployer);
-  const oracle = await PythPriceFeed.deploy(
-    "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
-    "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
-    8,
-    43200
-  );
-  await oracle.deployed();
-  console.log(`Deploy Oracle for at:`, oracle.address);
+  // const PythPriceFeed = await ethers.getContractFactory("PythPriceFeed", deployer);
+  // const oracle = await PythPriceFeed.deploy(
+  //   "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
+  //   "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+  //   8,
+  //   7200
+  // );
+  // await oracle.deployed();
+  // console.log(`Deploy Oracle for at:`, oracle.address);
+  for (const token of ["CFX", "WETH", "WBTC","USDT", "xCFX", "USDC", "NUT"]) {
+    const market = addresses.Markets[token];
+    if (market.oracle === "") {
+      if (token == "xCFX"){
+        const xCFXPythPriceFeed = await ethers.getContractFactory("xCFXPythPriceFeed", deployer);
+        const oracle = await xCFXPythPriceFeed.deploy(
+          market.xCFXExchangeroom,
+          addresses.PythRouter,
+          market.pythConfig.assetId,
+          market.pythConfig.decimals,
+          market.pythConfig.timeout
+        );
+        await oracle.deployed();
+        console.log(`Deployed Oracle for [${token}] at:`, oracle.address);
+        market.oracle = oracle.address;
+        console.log(`${token} current price: ${await oracle.fetchPrice()}`);
+      }else if(market.SwappiPair !== undefined){
+        const PythSwappiPairPriceFeed = await ethers.getContractFactory("PythSwappiPairPriceFeed", deployer);
+        const oracle = await PythSwappiPairPriceFeed.deploy(
+          market.SwappiPair,
+          addresses.Markets["CFX"].token,
+          addresses.PythRouter,
+          market.pythConfig.assetId,
+          market.pythConfig.decimals,
+          market.pythConfig.timeout
+        );
+        await oracle.deployed();
+        console.log(`Deployed Oracle for [${token}] at:`, oracle.address);
+        market.oracle = oracle.address;
+        console.log(`${token} current price: ${await oracle.fetchPrice()}`);
+      }else{
+        const PythPriceFeed = await ethers.getContractFactory("PythPriceFeed", deployer);
+        const oracle = await PythPriceFeed.deploy(
+          addresses.PythRouter,
+          market.pythConfig.assetId,
+          market.pythConfig.decimals,
+          market.pythConfig.timeout
+        );
+        await oracle.deployed();
+        console.log(`Deployed Oracle for [${token}] at:`, oracle.address);
+        market.oracle = oracle.address;
+        console.log(`${token} current price: ${await oracle.fetchPrice()}`);
+      }
+    }
+    if ((await aaveOracle.getSourceOfAsset(market.token)) !== market.oracle) {
+      const tx = await aaveOracle.setAssetSources([market.token], [market.oracle]);
+      console.log(`>> SetAssetSources in AaveOracle for ${token}, hash:`, tx.hash);
+      await tx.wait();
+      console.log(">> ✅ Done");
+    }
+  }
+  let data = JSON.stringify(addresses, null, 2);
+  fs.writeFileSync("formalScripts/" + network.name + "Address.json", data);
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.

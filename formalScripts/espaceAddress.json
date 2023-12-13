@@ -38,12 +38,17 @@
       "atoken": "0x884a1599F360F61272C0814C2E423Cc8345D6476",
       "stoken": "0x8B4e5c942E720fdfD1BC133fd2bC3B7d7C8d41F9",
       "vtoken": "0x62E3483340675e27836Fe468c17E6E9C29648454",
-      "oracle": "0x54777245788778229B923B2d1d3121D3b3642ebB",
+      "oracle": "0x489A03f0A2d5D79ad603B5aFb6784f109d8D9450",
       "DefaultReserveInterestRateStrategy": "0xE73034AD8337b4836b885530F83F56b45b587A1E",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 10800
       }
     },
     "WETH": {
@@ -52,12 +57,17 @@
       "atoken": "0x281CEf1A6b21Cd692f4577922029225AF4FFfF98",
       "stoken": "0x3A27102Bb44f2eE3aB440BcF122ef8204aCcdC41",
       "vtoken": "0x7E38b986c87E09702F43115f7f75e5290E5947F2",
-      "oracle": "0x7aEEaE13737d8C743a03Ac7DE919033548322274",
+      "oracle": "0x50B0A35343A25BB9F963839b371723a26aD52c2f",
       "DefaultReserveInterestRateStrategy": "0xb50AAc8dCf4E5E37A0F52357Ac42d615c334c36E",
       "witnetConfig": {
         "assetId": "0x3d15f7018db5cc80838b684361aaa100bfadf8a11e02d5c1c92e9c6af47626c8",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
+        "decimals": 8,
+        "timeout": 10800
       }
     },
     "WBTC": {
@@ -66,12 +76,17 @@
       "atoken": "0xde75097Fce76a3C5402ba6875F670E75e26B890C",
       "stoken": "0x32B3587828C5Ce3B9771A6e92949fa49baEd2545",
       "vtoken": "0x048516Af57ab772A82b3662456435e1c57623033",
-      "oracle": "0xe5498321BF798EFecB3F50C3552764AF0B7E05F6",
+      "oracle": "0xf7a9a1b010EbaDfB101C62ADbff7643aEccE724e",
       "DefaultReserveInterestRateStrategy": "0x1e73A2e1B5bc1b328dBDbA4FBd6F934Ff342Ab34",
       "witnetConfig": {
         "assetId": "0x24beead43216e490aa240ef0d32e18c57beea168f06eabb94f5193868d500946",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+        "decimals": 8,
+        "timeout": 10800
       }
     },
     "USDT": {
@@ -80,11 +95,16 @@
       "atoken": "0xE8234d58764a342b7b51Ae4e1cf05C3454C7BFb6",
       "stoken": "0x69F7AD85Fb47BA9E893e1E87cFad5a99ac9D18E2",
       "vtoken": "0x1Ba38A492C1a20bA72e8096cb3c5934B4FB64705",
-      "oracle": "0x8ECA7b13CAfbe119Dc8E099035Cc414217842C8b",
+      "oracle": "0xD0D3379babCc53729F927464637a924F7Fc71167",
       "DefaultReserveInterestRateStrategy": "0x189e21690245a99E9E35029a18C0b9FDe8B67EeE",
       "witnetConfig": {
         "assetId": "0x538f5a25b39995a23c24037d2d38f979c8fa7b00d001e897212d936e6f6556ef",
         "decimals": 6,
+        "timeout": 172800
+      },
+      "pythConfig": {
+        "assetId": "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+        "decimals": 8,
         "timeout": 172800
       }
     },
@@ -94,12 +114,18 @@
       "atoken": "0x06fB6757aa45E317FED3188144bcB0b72F2e7bB7",
       "stoken": "0x45Ee411bfb5B6c560015b0948612aEE0E9945D27",
       "vtoken": "0x1B404f905048AC3091B0F6c6E45A3212b24261Bc",
-      "oracle": "0x37dB91B7604397c23B5b4FD1f1d3b1114e7534D1",
+      "oracle": "0x4707C871aA484af3e982236D6922F031AA7D8Ae4",
+      "xCFXExchangeroom": "0x808f81acc4618a05c8253a7b41240468c08cd64c",
       "DefaultReserveInterestRateStrategy": "0xfC49C4DC6638760Bfc5E723819F6044ae5a28528",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 10800
       }
     },
     "USDC": {
@@ -108,11 +134,16 @@
       "atoken": "0xF20e046689AdF30711A67afF975F16D47FE72abA",
       "stoken": "0x2f894dBAc081be567B317DA24a43125ACF2CA8E1",
       "vtoken": "0x7e03D111D7d2819Ab19BF326518f54D8e0920E28",
-      "oracle": "0x6FA8aa3f161bCb8CdA78114001F632cf57b8c047",
+      "oracle": "0x91d1c9A15119F12de1bA8Df1aAF353766bA37aE3",
       "DefaultReserveInterestRateStrategy": "0x58Aa57f01f6CD5FA64B6F682F267Ef490f840224",
       "witnetConfig": {
         "assetId": "0x4c80cf2e5b3d17b98f6f24fc78f661982b8ef656c3b75a038f7bfc6f93c1b20e",
         "decimals": 6,
+        "timeout": 172800
+      },
+      "pythConfig": {
+        "assetId": "0xeaa020c61cc479712813461ce153894a96a6c00b21ed0cfc2798d1f9a9e9c94a",
+        "decimals": 8,
         "timeout": 172800
       }
     },
@@ -122,15 +153,22 @@
       "atoken": "0xcbA81566c4d9cD22F685FC77D0739cb5e4571208",
       "stoken": "0x25f0CAEA170D1e3D4C20ED55677c605B4D712B32",
       "vtoken": "0x550eE1e5d54E7c271D9Db7C27636D1e46D3C65dD",
-      "oracle": "0xCAe2Da4f39B4E1Cc5fdc9184c36D029Dbae7f575",
+      "oracle": "0xf6d1AEe049e79e587dBC596405B5095F5719FdC4",
+      "SwappiPair": "0xd9d5748cb36a81fe58f91844f4a0412502fd3105",
       "DefaultReserveInterestRateStrategy": "0x0dbDD6aBb3eA3b26f108731907F14984a6EfC653",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 10800
       }
     }
   },
+  "PythRouter": "0xe9d69cdd6fe41e7b621b4a688c5d1a68cb5c8adc",
   "ATokenImplV2": "0xD12dFc7F12a4Ccd93BAe3FA91a90fb84B30049Ce",
   "StableDebtTokenImplV2": "0x6b69Fc5d2DcE1C37e0E6716ee4a83a62fAEAbEa4",
   "VariableDebtTokenImplV2": "0xfeabF90E77FB35AdF6159B2D1238B8D4470fD349",

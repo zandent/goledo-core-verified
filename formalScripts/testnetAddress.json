@@ -38,11 +38,16 @@
       "atoken": "0x3d74BAbc52B11aa752C9fEdd4483CC8e0a11CDcA",
       "stoken": "0xF8eC31a1250213A2b15dcA04e8Fecf1b849f5E41",
       "vtoken": "0x9b7898888e1db6400574c5f83f817Ad8273978BD",
-      "oracle": "0x334eCF3bf0582677a43e0e56C93CaA4bDB7E3789",
+      "oracle": "0x6ff37aDaBcC1a951198904b3e0897164a06f55DD",
       "DefaultReserveInterestRateStrategy": "0xB3C290F8f32239E2d4B49FF17FE655B2728e830F",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
+        "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
         "timeout": 7200
       }
     },
@@ -52,11 +57,16 @@
       "atoken": "0x6cd82EF6E912a8F48bEAB251f66E1573adB79e03",
       "stoken": "0xefBf14efabd75707C85a225052671ED422BDC977",
       "vtoken": "0x5ba29Dec983760e087e56f5307DcBc145E6bBFCc",
-      "oracle": "0x209325F549294bD6bEe0899273101D11C48e9B17",
+      "oracle": "0xD6Bb5cBcBD34753B30d8beb4141b0b0a65385881",
       "DefaultReserveInterestRateStrategy": "0xb1abE78dB76a4E1f2F442A16bC5962d20d2321e9",
       "witnetConfig": {
         "assetId": "0x3d15f7018db5cc80838b684361aaa100bfadf8a11e02d5c1c92e9c6af47626c8",
         "decimals": 6,
+        "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace",
+        "decimals": 8,
         "timeout": 7200
       }
     },
@@ -66,11 +76,16 @@
       "atoken": "0x57676Ae786b9833Bb8AB4372aE9cb57ac68618F6",
       "stoken": "0xeBc8e19B0EEd954b89DA197cF0487e0D8F4E32d2",
       "vtoken": "0x85C69735dc602E882ce3E1dEa9E14357FA3Ba46D",
-      "oracle": "0xfD4Ea9529A2A99674Bb86131E0c0E751b6fd7696",
+      "oracle": "0xa347FE04bFDd67c3c1D2CB8964AF87914F9AFd5C",
       "DefaultReserveInterestRateStrategy": "0xe73d066a7dd5A01BC3411efaA9D84F5D8527170F",
       "witnetConfig": {
         "assetId": "0x24beead43216e490aa240ef0d32e18c57beea168f06eabb94f5193868d500946",
         "decimals": 6,
+        "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43",
+        "decimals": 8,
         "timeout": 7200
       }
     },
@@ -80,11 +95,16 @@
       "atoken": "0xb51d6e2FFe9530fD53792BA811098AE903cBE848",
       "stoken": "0x50a741156b6CF44353FAd1F6A3B6ED4455E2a201",
       "vtoken": "0xef0E69Ecce9fB56f242e43f8cED19F8E826244aA",
-      "oracle": "0xc22D32c929f0a8c868DB54d781Fe68BDBF09e883",
+      "oracle": "0xEa3750Be03fE8587354ed4dC7DA32bF008472890",
       "DefaultReserveInterestRateStrategy": "0x6a304976A13e7185a7233F5FdE7aCd8E4C937aa0",
       "witnetConfig": {
         "assetId": "0x538f5a25b39995a23c24037d2d38f979c8fa7b00d001e897212d936e6f6556ef",
         "decimals": 6,
+        "timeout": 172800
+      },
+      "pythConfig": {
+        "assetId": "0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b",
+        "decimals": 8,
         "timeout": 172800
       }
     },
@@ -94,15 +114,23 @@
       "atoken": "0x1676D785eC9436Abc0d03e33f02b0C63607D1645",
       "stoken": "0x5A8e1135ecf730f665Ce0A48109b01CC0a68BD71",
       "vtoken": "0xEc0f7BBF2179f9Aa762636d977eE8841292A6128",
-      "oracle": "0x3c3D99b5a057eaDD2e838A7b6B9CBd30c0a2b388",
+      "oracle": "0xc85d6E56FD309e4Edb2519bA9A8c4B6aE576A67B",
+      "xCFXExchangeroom": "0x0b91c3914df0b524d4e65deb5a05c56bc2cde3b4",
+      "SwappiPair": "0xe5132212769717e7a39359c5e2b3ceff00e3e7a3",
       "DefaultReserveInterestRateStrategy": "0xF79F62d1890b3d9460f4c2bE50dC08230F319a77",
       "witnetConfig": {
         "assetId": "0x65784185a07d3add5e7a99a6ddd4477e3c8caad717bac3ba3c3361d99a978c29",
         "decimals": 6,
         "timeout": 7200
+      },
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 7200
       }
     }
   },
+  "PythRouter": "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
   "GoledoTokenV2": "0x49A43C8D7C8c8bF9925Cc39DC235CcAa2109e085",
   "ATokenImplV2": "0x1D772288Cdfbe00C0D2e094109791a89481fFfD8",
   "StableDebtTokenImplV2": "0xAdCfDE3Db05A23aB9ed638cc42A49D7F1165Bedf",
