@@ -760,4 +760,16 @@ contract MasterChefV2 is NeedInitialize, OwnableUpgradeable {
     }
     _mint(_user, pending);
   }
+  function syncEmissions(
+    uint128[] memory _startTimeOffset,
+    uint128[] memory _rewardsPerSecond
+  )public onlyOwner {
+    uint256 length = _startTimeOffset.length;
+    require (length == _rewardsPerSecond.length, "input length not match");
+    require (length == emissionSchedule.length, "length not match original");
+    for (uint256 i = 0; i < length; i++) {
+      emissionSchedule[length-1-i].startTimeOffset = _startTimeOffset[i];
+      emissionSchedule[length-1-i].rewardsPerSecond = _rewardsPerSecond[i];
+    }
+  }
 }
