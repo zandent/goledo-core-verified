@@ -128,6 +128,21 @@
         "decimals": 8,
         "timeout": 7200
       }
+    },
+    "PPI": {
+      "token": "0x49916ba65d0048c4bbb0a786a527d98d10a1cd2d",
+      "decimals": 18,
+      "atoken": "0xBD5c9c9c496f8730c60a550758471C9E23F197d2",
+      "stoken": "0x03E13623b171a083030269Da30F12f563CA6B332",
+      "vtoken": "0x06450b657d4A75666C627e90371084D20BA75644",
+      "oracle": "0xB0eC1aFE28D449652BA024459610BEb62053640D",
+      "SwappiPair": "0x3b4b02b8e8316bce72bc02d5484d802e94629407",
+      "DefaultReserveInterestRateStrategy": "0xa3df554B075dc8604146Ab63113343b2a1d6EA4c",
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 10800
+      }
     }
   },
   "PythRouter": "0xDd24F84d36BF92C65F92307595335bdFab5Bbd21",
