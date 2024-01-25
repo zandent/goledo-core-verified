@@ -181,6 +181,21 @@
         "decimals": 8,
         "timeout": 10800
       }
+    },
+    "ABC": {
+      "token": "0x905f2202003453006eaf975699545f2e909079b8",
+      "decimals": 18,
+      "atoken": "0xd953c0e492Aa524Ad051d2f6D6D406b2e5a50523",
+      "stoken": "0x7826D79eF8948584097698D486bDfb248E1d2652",
+      "vtoken": "0xf2FF34226d0D58eb08c6873BCfCE89870CAd66DB",
+      "oracle": "0xa05c926D4306033e9F3e42bbBb0105A7F80Ec692",
+      "SwappiPair": "0x700d841e087f4038639b214e849beab622f178c6",
+      "DefaultReserveInterestRateStrategy": "0x6A2eF8e0E8241Cff6edaa28a100305F3163a7815",
+      "pythConfig": {
+        "assetId": "0x8879170230c9603342f3837cf9a8e76c61791198fb1271bb2552c9af7b33c933",
+        "decimals": 8,
+        "timeout": 10800
+      }
     }
   },
   "PythRouter": "0xe9d69cdd6fe41e7b621b4a688c5d1a68cb5c8adc",
